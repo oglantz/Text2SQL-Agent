@@ -1,0 +1,7 @@
+openai
+anthropic
+python-dotenv
+datasets
+tqdm
+pandas
+matplotlib
