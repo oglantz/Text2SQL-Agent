@@ -1,4 +1,5 @@
-"""Model-agnostic ReAct agent loop. FROZEN after Phase 0 — never change its behavior.
+"""
+Model-agnostic ReAct agent loop. FROZEN after Phase 0 — never change its behavior.
 
 Talks to any OpenAI-compatible chat-completions endpoint with tool calling, so the
 same code drives both teacher (hosted API) and student (vLLM). Swap base_url + model.

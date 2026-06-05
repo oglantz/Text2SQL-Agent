@@ -3,6 +3,7 @@
 Placeholder scaffold — fill in as phases are implemented. Keep all tunables here
 so the frozen harness code (agent/tools/eval) never hard-codes a model or path.
 """
+import os
 from pathlib import Path
 
 # --- Paths ---
@@ -19,6 +20,17 @@ DEV_JSON = SPIDER_DIR / "dev.json"
 TRAIN_JSON = SPIDER_DIR / "train_spider.json"
 TABLES_JSON = SPIDER_DIR / "tables.json"
 DATABASE_DIR = SPIDER_DIR / "database"  # <db_id>/<db_id>.sqlite
+
+# --- Official Spider test-suite eval (used by `eval.py --official`) ---
+# Clone https://github.com/taoyds/test-suite-sql-eval and point SPIDER_TEST_SUITE_DIR
+# at it; TEST_SUITE_DB_DIR is the perturbed multi-instance databases (separate
+# download). Either can be overridden via the matching environment variable.
+SPIDER_TEST_SUITE_DIR = Path(
+    os.environ.get("SPIDER_TEST_SUITE_DIR", ROOT / "third_party" / "test-suite-sql-eval")
+)
+TEST_SUITE_DB_DIR = Path(
+    os.environ.get("SPIDER_TEST_SUITE_DB", SPIDER_DIR / "test_suite_database")
+)
 
 # --- Models / endpoints ---
 # Teacher = hosted OpenAI-compatible API. Student = vLLM serving an open model.

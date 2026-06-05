@@ -1,4 +1,5 @@
-"""SQLite connection + safe execution helpers.
+"""
+SQLite connection + safe execution helpers.
 
 Contract (Phase 0):
     get_connection(db_id) -> sqlite3.Connection

@@ -1,4 +1,5 @@
-"""Error taxonomy + plots (Phase 3).
+"""
+Error taxonomy + plots (Phase 3).
 
 Categorize failures into:
     - schema-linking errors   — wrong table/column chosen

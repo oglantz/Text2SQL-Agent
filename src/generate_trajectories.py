@@ -1,4 +1,5 @@
-"""Run the agent over a dataset and save transcripts.
+"""
+Run the agent over a dataset and save transcripts.
 
 Same run_episode loop, but model = teacher endpoint (Phase 1) or student endpoint
 (Phase 2 rollouts), over train_spider.json / dev.json.

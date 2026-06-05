@@ -1,4 +1,5 @@
-"""Convert filtered trajectories -> HF "messages" training JSONL.
+"""
+Convert filtered trajectories -> HF "messages" training JSONL.
 
 Each line: {"messages": [...]} in the format SFTTrainer expects, preserving
 tool-call and tool-result turns, ending with the model's submit. The model is

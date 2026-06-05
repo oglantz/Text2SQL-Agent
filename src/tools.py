@@ -1,4 +1,5 @@
-"""The 5 agent tools. FROZEN after Phase 0 — never change their behavior.
+"""
+The 5 agent tools. FROZEN after Phase 0 — never change their behavior.
 
 These are exposed to the model as tool/function definitions (JSON schemas) via the
 chat-completions tool-calling API. The loop executes the chosen tool and returns
