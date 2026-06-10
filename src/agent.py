@@ -15,6 +15,9 @@ same code drives both teacher (hosted API) and student (vLLM). Swap base_url + m
 
 Placeholder — implement in Phase 0.
 """
+import json
+from openai import OpenAI
+from src.tools import dispatch_tool
 
 SYSTEM_PROMPT = """\
 You are a SQL agent. Explore the database with the provided tools, then write a
@@ -23,9 +26,30 @@ each tool and require the model to end with submit.
 """
 
 
-def dispatch_tool(name, db_id, args):
-    raise NotImplementedError
 
 
 def run_episode(client, model, db_id, question, tool_defs, max_steps=8):
-    raise NotImplementedError
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},   # explains tools + that it must call submit()
+        {"role": "user", "content": f"Database: {db_id}\nQuestion: {question}"},
+    ]
+    for step in range(max_steps):
+        resp = client.chat.completions.create(
+            model=model, messages=messages, tools=tool_defs, temperature=0.0,
+        )
+        msg = resp.choices[0].message
+        messages.append(msg)                              # record the assistant turn (thoughts + tool call)
+
+        if not msg.tool_calls:                            # model answered without a tool — nudge or stop
+            continue
+
+        for call in msg.tool_calls:
+            name = call.function.name
+            args = json.loads(call.function.arguments)
+            if name == "submit":
+                return {"submitted_sql": args["sql"], "messages": messages, "steps": step + 1}
+            result = dispatch_tool(name, db_id, args)     # calls into src/tools.py
+            messages.append({                             # feed the OBSERVATION back
+                "role": "tool", "tool_call_id": call.id, "content": str(result),
+            })
+    return {"submitted_sql": None, "messages": messages, "steps": max_steps}  # gave up

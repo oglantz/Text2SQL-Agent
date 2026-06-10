@@ -59,6 +59,7 @@ def dispatch_tool(name, db_id, args):
     if name == "execute_sql":   return execute_sql(db_id, args["sql"])
     return f"ERROR: unknown tool '{name}'"   # model hallucinated a tool — let it recover, don't crash
 
+
 # JSON-schema tool definitions passed to the chat-completions API.
 TOOL_DEFS = [
     {"type": "function", "function": {
